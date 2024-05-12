@@ -1,0 +1,42 @@
+:host {
+  display: block;
+  height: 100vh;
+
+  mat-card {
+    margin: 2%;
+    text-align: left;
+  }
+
+  .mat-mdc-form-field {
+    width: 98%;
+    margin: 1%;
+  }
+
+  .mat-50 {
+    width: 48%;
+    margin: 1%;
+  }
+
+  button {
+    margin: 2px;
+    background-color: blue;
+    border-radius: 20px;
+  }
+
+  .mat-card-container {
+    display: flex;
+    justify-content: center; /* Centra el mat-card horizontalmente */
+    align-items: center; /* Centra el mat-card verticalmente */
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column; /* Alinea los elementos en columna */
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: center; /* Centra verticalmente los elementos */
+  }
+}

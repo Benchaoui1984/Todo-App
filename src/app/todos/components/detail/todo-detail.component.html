@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="header">
+    <h1>{{ title }}</h1>
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="onBack()">
+        Volver
+      </button>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="name" placeholder="Nombre" />
+    <mat-error *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+      El nombre es requerido
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Descripción</mat-label>
+    <input matInput formControlName="description" placeholder="Descripción" />
+  </mat-form-field>
+  <br />
+  <button
+    *ngIf="mode === 'create'"
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="!form.valid"
+  >
+    Guarda todo
+  </button>
+</form>

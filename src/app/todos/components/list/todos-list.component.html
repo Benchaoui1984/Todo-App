@@ -1,0 +1,20 @@
+<button
+  style="margin-left: 85%"
+  (click)="addtodo()"
+  mat-raised-button
+  color="primary"
+>
+  Add Todo (+)
+</button>
+
+<section>
+  <mat-card>
+    <app-table
+      [data]="todos$ | async"
+      [columns]="tableColumns"
+      [config]="tableConfig"
+      [loading$]="loading$"
+      (action)="onTableAction($event)"
+    ></app-table>
+  </mat-card>
+</section>
