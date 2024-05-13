@@ -50,7 +50,7 @@ export const reducers = createReducer(
   on(TodosActions.delete, (state, { id }) => ({
     ...state,
     todos: state.todos.filter((item) => item.id !== id),
-    isLoading: true,
+    isLoadingDelte: true,
   })),
 
   on(TodosActions.deleteSuccess, (state, action) => ({

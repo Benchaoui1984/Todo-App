@@ -3,22 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
 import { Observable, Subject, filter, merge, takeUntil, tap } from 'rxjs';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { BrowserModule } from '@angular/platform-browser';
-import { MatDialogModule } from '@angular/material/dialog';
-import { Todo } from '../../../models/todo.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingService } from '../../../services/loading.service';
 import { AppStateInterface } from '../../../models/appState.interface';
 import {
   errorSelectorTodo,
-  isLoadingSelectorTodo,
+  isLoadingSelector,
   todoSelector,
 } from '../../../store/selectors';
 import { TodosActions } from '../../../store/actions';
@@ -26,13 +16,6 @@ import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-detail',
-  standalone: false,
-  // imports: [
-  //   MatDialogModule,
-  //   ReactiveFormsModule,
-  //   MatInputModule,
-  //   MatFormFieldModule, // Asegúrate de importar MatFormFieldModule aquí
-  // ],
   templateUrl: './todo-detail.component.html',
   styleUrl: './todo-detail.component.css',
 })
@@ -49,7 +32,7 @@ export class TodoDetailComponenet {
 
   private destroySubject = new Subject<void>();
   mode: 'create' | 'view';
-  hicham$!: Observable<Todo>;
+  loading$!: Observable<boolean>;
 
   constructor(
     private notificationService: NotificationService,
@@ -72,7 +55,6 @@ export class TodoDetailComponenet {
       description: [''],
     });
 
-    this.isLoading$ = this.store.pipe(select(isLoadingSelectorTodo));
     this.error$ = this.store.pipe(select(errorSelectorTodo));
     this.todo$ = this.store.pipe(select(todoSelector));
 
@@ -84,9 +66,12 @@ export class TodoDetailComponenet {
     if (this.form.valid) {
       console.log(this.form.value);
       // Aquí puedes enviar el formulario
-      const hicham = this.form.value;
-      this.store.dispatch(TodosActions.create(hicham));
-
+      const formValue = this.form.value;
+      this.store.dispatch(TodosActions.create(formValue));
+      this.loading$ = this.store.pipe(select(isLoadingSelector));
+      this.loading$.subscribe((load) =>
+        this.loadingService.setMainLoading(load)
+      );
       this.notificationService.createdSuccessful();
 
       this.router.navigate(['/list']);

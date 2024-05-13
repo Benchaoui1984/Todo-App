@@ -18,20 +18,6 @@ export const errorSelector = createSelector(
   (state) => state.error
 );
 
-//
-
-export const selectTodoById = (todoId: number) =>
-  createSelector(selectFeature, (state) =>
-    state.todos.find((item) => item.id === todoId)
-  );
-
-//
-
-export const isLoadingSelectorTodo = createSelector(
-  selectFeature,
-  (state) => state.isLoading
-);
-
 export const todoSelector = createSelector(
   selectFeature,
   (state) => state?.todo

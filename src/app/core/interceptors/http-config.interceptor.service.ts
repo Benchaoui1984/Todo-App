@@ -6,7 +6,6 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { NEVER, Observable, catchError, tap } from 'rxjs';
 import { LoadingService } from '../../services/loading.service';
 import { ErrorManagerService } from '../../services/error-manager.service';
@@ -14,7 +13,6 @@ import { ErrorManagerService } from '../../services/error-manager.service';
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
   constructor(
-    private dialogRef: MatDialog,
     private loadingService: LoadingService,
     private errorManagerService: ErrorManagerService
   ) {}

@@ -15,6 +15,7 @@ import {
 } from '../../../store/selectors';
 import { ModalService } from '../../../services/modal.service';
 import { NotificationService } from '../../../services/notification.service';
+import { LoadingService } from '../../../services/loading.service';
 
 @Component({
   selector: 'app-customers',
@@ -41,7 +42,8 @@ export class TodosListComponent implements OnInit {
     private router: Router,
     private store: Store<AppStateInterface>,
     private modalService: ModalService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private loadingService: LoadingService
   ) {
     this.initDispatch();
     this.initSubscriptions();
@@ -80,6 +82,9 @@ export class TodosListComponent implements OnInit {
         if (confirm) {
           this.store.dispatch(TodosActions.delete({ id: breed.id }));
           this.loading$ = this.store.pipe(select(isLoadingSelector));
+          this.loading$.subscribe((load) =>
+            this.loadingService.setMainLoading(load)
+          );
         }
 
         this.notificationService.deletedSuccessful();
